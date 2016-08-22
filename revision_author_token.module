@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function revision_author_token_entity_property_info_alter(&$info) {
+  $info['node']['properties']['current-revision-author-mail'] = array(
+    'label' => t('Revision author email'),
+    'type' => 'text',
+    'description' => t('The email of the author of the current revision of the node.'),
+    'computed' => TRUE,
+    'field' => FALSE,
+  );
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function revision_author_token_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  if ($type == 'entity' && $data['entity_type'] == 'node') {
+    $values = array ();
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'current-revision-author-mail':
+          $node = $data['entity'];
+          if($node->revision_uid) {
+            $account = user_load ($node->revision_uid);
+          }
+          else {
+            $account = user_load ($node->uid);
+          }
+          $values[$original] = $account->mail;
+          break;
+      }
+    }
+    return $values;
+  }
+}
+
+
+
+/**
+ * Implements hook_rules_condition_info()
+ */
+function revision_author_token_rules_condition_info() {
+  return array(
+    'revision_author_token_condition_revision' => array(
+      'label' => t('Is revision creator is author'),
+      'group' => t('Custom'),
+      'parameter' => array(       
+        'node' => array(
+          'type' => 'node',
+          'label' => t('Content')
+          ),
+      )  
+    )
+  );
+}
+
+function revision_author_token_condition_revision ($node) {
+  return ($node->uid == $node -> revision_uid);
+}
