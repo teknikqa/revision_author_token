@@ -23,11 +23,40 @@ function revision_author_token_tokens($type, $tokens, array $data = array(), arr
       switch ($name) {
         case 'current-revision-author-mail':
           $node = $data['entity'];
-          $account = user_load ($node->revision_uid);
+          if($node->revision_uid) {
+            $account = user_load ($node->revision_uid);
+          }
+          else {
+            $account = user_load ($node->uid);
+          }
           $values[$original] = $account->mail;
           break;
       }
     }
     return $values;
   }
+}
+
+
+
+/**
+ * Implements hook_rules_condition_info()
+ */
+function revision_author_token_rules_condition_info() {
+  return array(
+    'revision_author_token_condition_revision' => array(
+      'label' => t('Is revision creator is author'),
+      'group' => t('Custom'),
+      'parameter' => array(
+        'node' => array(
+          'type' => 'node',
+          'label' => t('Content')
+          ),
+      )
+    )
+  );
+}
+
+function revision_author_token_condition_revision ($node) {
+  return ($node->uid == $node -> revision_uid);
 }
