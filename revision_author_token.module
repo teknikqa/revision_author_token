@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Creates a token to identify the author of a revision.
+ */
+
+/**
  * Implements hook_entity_property_info_alter().
  */
 function revision_author_token_entity_property_info_alter(&$info) {
@@ -18,16 +23,16 @@ function revision_author_token_entity_property_info_alter(&$info) {
  */
 function revision_author_token_tokens($type, $tokens, array $data = array(), array $options = array()) {
   if ($type == 'entity' && $data['entity_type'] == 'node') {
-    $values = array ();
+    $values = array();
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'current-revision-author-mail':
           $node = $data['entity'];
-          if($node->revision_uid) {
-            $account = user_load ($node->revision_uid);
+          if ($node->revision_uid) {
+            $account = user_load($node->revision_uid);
           }
           else {
-            $account = user_load ($node->uid);
+            $account = user_load($node->uid);
           }
           $values[$original] = $account->mail;
           break;
@@ -37,8 +42,6 @@ function revision_author_token_tokens($type, $tokens, array $data = array(), arr
   }
 }
 
-
-
 /**
  * Implements hook_rules_condition_info()
  */
@@ -47,16 +50,25 @@ function revision_author_token_rules_condition_info() {
     'revision_author_token_condition_revision' => array(
       'label' => t('Is revision creator is author'),
       'group' => t('Custom'),
-      'parameter' => array(       
+      'parameter' => array(
         'node' => array(
           'type' => 'node',
           'label' => t('Content')
           ),
-      )  
+      )
     )
   );
 }
 
-function revision_author_token_condition_revision ($node) {
-  return ($node->uid == $node -> revision_uid);
+/**
+ * Checks if the revision author is the same as the one who created the node.
+ *
+ * @param array $node
+ *    The node that is being checked.
+ *
+ * @return bool
+ *    True or false if the user id and the revisision user id are same.
+ */
+function revision_author_token_condition_revision($node) {
+  return ($node->uid == $node->revision_uid);
 }
