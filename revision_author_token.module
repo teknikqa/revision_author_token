@@ -67,7 +67,7 @@ function revision_author_token_rules_condition_info() {
  *    The node that is being checked.
  *
  * @return bool
- *    True or false if the user id and the revisision user id are same.
+ *    True or false if the user id and the revision user id are same.
  */
 function revision_author_token_condition_revision($node) {
   return ($node->uid == $node->revision_uid);
