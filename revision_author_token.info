@@ -1,4 +1,5 @@
 name = Revision Author Token
 description = This module provides a new token (for Rules, for example) to access the email of the author of a particular node revision
 core = 7.x
+version = 7.x-0.5
 package = GUQatar
