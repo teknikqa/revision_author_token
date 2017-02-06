@@ -1,4 +1,3 @@
-=====
 Revision Author Token
 -----
 Published and maintained by Boriana Ditcheva.
@@ -6,13 +5,11 @@ Original code and code edits by @berenddeboer and @dbassendine (so helpful, than
 on this ticket: https://www.drupal.org/node/1730000
 
 
-=====
 Description
 -----
-This module provides a new token (for Rules, for example) to access the email of the author of a particular 
+This module provides a new token (for Rules, for example) to access the email of the author of a particular
 node revision
 
-=====
 Installation
 -----
 
