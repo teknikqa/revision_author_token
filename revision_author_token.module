@@ -28,7 +28,7 @@ function revision_author_token_tokens($type, $tokens, array $data = array(), arr
       switch ($name) {
         case 'current-revision-author-mail':
           $node = $data['entity'];
-          if ($node->revision_uid) {
+          if (isset($node->revision_uid)) {
             $account = user_load($node->revision_uid);
           }
           else {
