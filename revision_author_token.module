@@ -43,7 +43,7 @@ function revision_author_token_tokens($type, $tokens, array $data = array(), arr
 }
 
 /**
- * Implements hook_rules_condition_info()
+ * Implements hook_rules_condition_info().
  */
 function revision_author_token_rules_condition_info() {
   return array(
@@ -53,10 +53,10 @@ function revision_author_token_rules_condition_info() {
       'parameter' => array(
         'node' => array(
           'type' => 'node',
-          'label' => t('Content')
-          ),
-      )
-    )
+          'label' => t('Content'),
+        ),
+      ),
+    ),
   );
 }
 
@@ -64,10 +64,10 @@ function revision_author_token_rules_condition_info() {
  * Checks if the revision author is the same as the one who created the node.
  *
  * @param array $node
- *    The node that is being checked.
+ *   The node that is being checked.
  *
  * @return bool
- *    True or false if the user id and the revision user id are same.
+ *   True or false if the user id and the revision user id are same.
  */
 function revision_author_token_condition_revision($node) {
   return ($node->uid == $node->revision_uid);
