@@ -14,4 +14,4 @@ Installation
 -----
 
 1. Enable the module
-2. Once the module is enabled, the following token will be availabe to use in your rules: [node:current-revision-author-mail]
+2. Once the module is enabled, the following token will be available to use in your rules: [node:current-revision-author-mail]
